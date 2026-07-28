@@ -13,8 +13,11 @@
   margin: 0 auto;
   --sidebar-width: 200px;
   --content-gap: 2em;
+  --sidebar-right-gap: 2em;
   display: grid;
-  grid-template-columns: calc(var(--sidebar-width) + var(--content-gap)) minmax(0, 1fr);
+  grid-template-columns:
+    calc(var(--sidebar-width) + var(--content-gap) + var(--sidebar-right-gap))
+    minmax(0, 1fr);
   padding-right: var(--content-gap);
 }
 
