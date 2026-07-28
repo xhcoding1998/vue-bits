@@ -57,7 +57,7 @@ onUnmounted(() => {
           <p class="ln-cta-sub">精致的 Vue 动效组件，可直接放进任何项目；实时预览、完整源码与 AI 提示词一应俱全。</p>
 
           <div class="ln-cta-buttons">
-            <a href="/get-started/index" class="ln-cta-btn ln-cta-btn--primary">
+            <RouterLink to="/get-started/index" class="ln-cta-btn ln-cta-btn--primary">
               浏览全部组件
 
               <svg
@@ -75,7 +75,7 @@ onUnmounted(() => {
 
                 <polyline points="12 5 19 12 12 19" />
               </svg>
-            </a>
+            </RouterLink>
 
             <RouterLink to="/backgrounds/aurora" class="ln-cta-btn ln-cta-btn--secondary">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">

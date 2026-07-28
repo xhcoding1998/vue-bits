@@ -208,7 +208,7 @@ const dotProps = computed(() => propValues.value[1] as Record<string, number | b
 
     <div class="ln-hero-content">
       <div class="ln-hero-left">
-        <a href="/backgrounds/dot-field" class="ln-hero-tag">
+        <RouterLink to="/backgrounds/dot-field" class="ln-hero-tag">
           <span
             class="ln-hero-tag-new"
             :style="{
@@ -226,7 +226,7 @@ const dotProps = computed(() => propValues.value[1] as Record<string, number | b
               d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
             />
           </svg>
-        </a>
+        </RouterLink>
 
         <h1 class="ln-hero-headline">
           <span class="ln-hero-headline-line">为创意开发者打造的</span>
@@ -241,8 +241,8 @@ const dotProps = computed(() => propValues.value[1] as Record<string, number | b
         </p>
 
         <div class="ln-hero-buttons">
-          <a
-            href="/get-started/index"
+          <RouterLink
+            to="/get-started/index"
             class="ln-hero-btn ln-hero-btn-primary"
             :style="{
               background: accentColor,
@@ -251,7 +251,7 @@ const dotProps = computed(() => propValues.value[1] as Record<string, number | b
             }"
           >
             浏览全部组件
-          </a>
+          </RouterLink>
         </div>
       </div>
 

@@ -88,11 +88,18 @@ onUnmounted(() => document.removeEventListener('keydown', onKey));
 /* ─── Docs drawer sidebar override ────────────────────────────────────────── */
 .docs-drawer .sidebar {
   position: static;
+  top: auto;
+  transform: none;
   padding: 0;
   margin-left: 0;
   max-width: none;
   width: 100%;
   height: auto;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   display: block;
 }
 
@@ -103,7 +110,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKey));
 
 @media only screen and (max-width: 967px) {
   .docs-content {
-    padding: 6em 1.25em 5.5em;
+    padding: 60px 0 0;
   }
 }
 </style>

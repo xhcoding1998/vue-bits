@@ -11,7 +11,7 @@
 .ln-cta-section {
   position: relative;
   width: 100%;
-  padding: 100px 0 160px;
+  padding: 100px 0 48px;
   background: var(--bg-body);
   z-index: 4;
   overflow: hidden;
@@ -180,7 +180,7 @@
 
 @media (max-width: 600px) {
   .ln-cta-section {
-    padding: 72px 0 96px;
+    padding: 72px 0 32px;
   }
 
   .ln-cta-card {

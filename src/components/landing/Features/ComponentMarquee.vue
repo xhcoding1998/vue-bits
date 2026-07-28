@@ -40,32 +40,32 @@ const rowBDoubled = [...ROW_B, ...ROW_B];
   <div class="ln-feat-marquee">
     <div class="ln-feat-marquee-track">
       <div class="ln-feat-marquee-scroll">
-        <a
+        <RouterLink
           v-for="(c, i) in rowADoubled"
           :key="i"
-          :href="HREF"
+          :to="HREF"
           :data-slug="toSlug(c.name)"
           :data-cat="c.cat"
           :title="c.name"
           class="ln-feat-pill"
         >
           {{ componentNameZh(c.name) }}
-        </a>
+        </RouterLink>
       </div>
     </div>
     <div class="ln-feat-marquee-track">
       <div class="ln-feat-marquee-scroll--rev ln-feat-marquee-scroll">
-        <a
+        <RouterLink
           v-for="(c, i) in rowBDoubled"
           :key="i"
-          :href="HREF"
+          :to="HREF"
           :data-slug="toSlug(c.name)"
           :data-cat="c.cat"
           :title="c.name"
           class="ln-feat-pill"
         >
           {{ componentNameZh(c.name) }}
-        </a>
+        </RouterLink>
       </div>
     </div>
   </div>

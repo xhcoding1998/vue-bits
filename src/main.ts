@@ -17,6 +17,9 @@ import Toast from 'primevue/toast';
 
 const app = createApp(App);
 
+document.documentElement.removeAttribute('data-theme');
+window.localStorage.removeItem('motion-lab-theme');
+
 app.use(router);
 app.use(PrimeVue, { theme: { preset: Aura } });
 app.use(ToastService);

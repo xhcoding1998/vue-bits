@@ -12,7 +12,7 @@ const { code, language = 'html' } = defineProps<{
     <VCodeBlock
       :code="code"
       :lang="language"
-      theme="nord"
+      theme="androidstudio"
       highlightjs
       :copy-button="true"
       :persistent-copy-button="true"
@@ -31,7 +31,7 @@ const { code, language = 'html' } = defineProps<{
   background: transparent !important;
   margin: 0;
   font-size: 13px;
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
   line-height: 1.6;
   overflow-x: auto;
 }

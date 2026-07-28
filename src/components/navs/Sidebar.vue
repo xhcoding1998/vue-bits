@@ -14,34 +14,133 @@ const slug = (str: string) => str.replace(/\s+/g, '-').toLowerCase();
 
 const activeCategory = computed(() => (route.params.category as string) ?? '');
 const activeSub = computed(() => (route.params.subcategory as string) ?? '');
-const sidebarRef = ref<HTMLElement | null>(null);
+const scrollAreaRef = ref<HTMLElement | null>(null);
+const scrollbarTrackRef = ref<HTMLElement | null>(null);
+const scrollbarThumbHeight = ref(44);
+const scrollbarThumbOffset = ref(0);
+const scrollbarValue = ref(0);
+const scrollbarMax = ref(0);
+const isScrollbarVisible = ref(false);
+
+const scrollbarThumbStyle = computed(() => ({
+  height: `${scrollbarThumbHeight.value}px`,
+  transform: `translateY(${scrollbarThumbOffset.value}px)`
+}));
 
 function isActive(cat: string, sub: string) {
   return slug(cat) === activeCategory.value && slug(sub) === activeSub.value;
 }
 
 let hasPositionedActiveItem = false;
+let resizeObserver: ResizeObserver | null = null;
+let dragStartY = 0;
+let dragStartScrollTop = 0;
+
+function updateScrollbar() {
+  const scrollArea = scrollAreaRef.value;
+  const track = scrollbarTrackRef.value;
+  if (!scrollArea || !track) return;
+
+  const maxScroll = Math.max(0, scrollArea.scrollHeight - scrollArea.clientHeight);
+  const trackHeight = track.clientHeight;
+  const thumbHeight =
+    maxScroll > 0 ? Math.max(44, trackHeight * (scrollArea.clientHeight / scrollArea.scrollHeight)) : trackHeight;
+  const thumbTravel = Math.max(0, trackHeight - thumbHeight);
+
+  isScrollbarVisible.value = maxScroll > 1;
+  scrollbarThumbHeight.value = Math.min(trackHeight, thumbHeight);
+  scrollbarValue.value = Math.round(scrollArea.scrollTop);
+  scrollbarMax.value = Math.round(maxScroll);
+  scrollbarThumbOffset.value = maxScroll > 0 ? (scrollArea.scrollTop / maxScroll) * thumbTravel : 0;
+}
+
+function onThumbPointerDown(event: PointerEvent) {
+  const scrollArea = scrollAreaRef.value;
+  if (!scrollArea) return;
+
+  dragStartY = event.clientY;
+  dragStartScrollTop = scrollArea.scrollTop;
+  (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+}
+
+function onThumbPointerMove(event: PointerEvent) {
+  const thumb = event.currentTarget as HTMLElement;
+  if (!thumb.hasPointerCapture(event.pointerId)) return;
+
+  const scrollArea = scrollAreaRef.value;
+  const track = scrollbarTrackRef.value;
+  if (!scrollArea || !track) return;
+
+  const maxScroll = Math.max(0, scrollArea.scrollHeight - scrollArea.clientHeight);
+  const thumbTravel = Math.max(1, track.clientHeight - scrollbarThumbHeight.value);
+  scrollArea.scrollTop = dragStartScrollTop + ((event.clientY - dragStartY) / thumbTravel) * maxScroll;
+}
+
+function onThumbPointerEnd(event: PointerEvent) {
+  const thumb = event.currentTarget as HTMLElement;
+  if (thumb.hasPointerCapture(event.pointerId)) thumb.releasePointerCapture(event.pointerId);
+}
+
+function onTrackPointerDown(event: PointerEvent) {
+  if (event.target !== event.currentTarget) return;
+
+  const scrollArea = scrollAreaRef.value;
+  const track = scrollbarTrackRef.value;
+  if (!scrollArea || !track) return;
+
+  const maxScroll = Math.max(0, scrollArea.scrollHeight - scrollArea.clientHeight);
+  const thumbTravel = Math.max(1, track.clientHeight - scrollbarThumbHeight.value);
+  const targetThumbTop = event.clientY - track.getBoundingClientRect().top - scrollbarThumbHeight.value / 2;
+  scrollArea.scrollTo({
+    top: (Math.max(0, Math.min(thumbTravel, targetThumbTop)) / thumbTravel) * maxScroll,
+    behavior: 'smooth'
+  });
+}
+
+function onScrollbarKeydown(event: KeyboardEvent) {
+  const scrollArea = scrollAreaRef.value;
+  if (!scrollArea) return;
+
+  const pageStep = scrollArea.clientHeight * 0.8;
+  const keySteps: Partial<Record<string, number>> = {
+    ArrowUp: -56,
+    ArrowDown: 56,
+    PageUp: -pageStep,
+    PageDown: pageStep
+  };
+
+  if (event.key === 'Home' || event.key === 'End') {
+    event.preventDefault();
+    scrollArea.scrollTo({ top: event.key === 'Home' ? 0 : scrollArea.scrollHeight, behavior: 'smooth' });
+    return;
+  }
+
+  const step = keySteps[event.key];
+  if (step === undefined) return;
+  event.preventDefault();
+  scrollArea.scrollBy({ top: step, behavior: 'smooth' });
+}
 
 function positionActiveItem() {
   const behavior: ScrollBehavior = hasPositionedActiveItem ? 'smooth' : 'auto';
   hasPositionedActiveItem = true;
 
   nextTick(() => {
-    const sidebar = sidebarRef.value;
-    const activeItem = sidebar?.querySelector<HTMLElement>('.sidebar-item.active');
-    if (!sidebar || !activeItem || sidebar.clientHeight === 0) return;
+    const scrollArea = scrollAreaRef.value;
+    const activeItem = scrollArea?.querySelector<HTMLElement>('.sidebar-item.active');
+    if (!scrollArea || !activeItem || scrollArea.clientHeight === 0) return;
 
-    const sidebarRect = sidebar.getBoundingClientRect();
+    const scrollAreaRect = scrollArea.getBoundingClientRect();
     const activeRect = activeItem.getBoundingClientRect();
-    const safeTop = sidebarRect.top + 112;
-    const safeBottom = sidebarRect.bottom - 48;
+    const safeTop = scrollAreaRect.top + 24;
+    const safeBottom = scrollAreaRect.bottom - 24;
 
     if (activeRect.top >= safeTop && activeRect.bottom <= safeBottom) return;
 
     const targetTop =
-      sidebar.scrollTop + activeRect.top - sidebarRect.top - (sidebar.clientHeight - activeRect.height) / 2;
+      scrollArea.scrollTop + activeRect.top - scrollAreaRect.top - (scrollArea.clientHeight - activeRect.height) / 2;
 
-    sidebar.scrollTo({
+    scrollArea.scrollTo({
       top: Math.max(0, targetTop),
       behavior
     });
@@ -67,10 +166,20 @@ onMounted(() => {
   loadSaved();
   window.addEventListener('favorites:updated', loadSaved);
   window.addEventListener('storage', onStorage);
+  window.addEventListener('resize', updateScrollbar);
+  nextTick(() => {
+    updateScrollbar();
+    if (scrollAreaRef.value && typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(updateScrollbar);
+      resizeObserver.observe(scrollAreaRef.value);
+    }
+  });
 });
 onBeforeUnmount(() => {
   window.removeEventListener('favorites:updated', loadSaved);
   window.removeEventListener('storage', onStorage);
+  window.removeEventListener('resize', updateScrollbar);
+  resizeObserver?.disconnect();
 });
 
 // ── navigation ────────────────────────────────────────────────────────────────
@@ -83,9 +192,9 @@ async function navigate(path: string) {
 </script>
 
 <template>
-  <aside ref="sidebarRef" class="sidebar" aria-label="组件文档导航">
+  <aside class="sidebar" aria-label="组件文档导航">
     <div class="sidebar-inner">
-      <div class="sidebar-cat-list">
+      <div ref="scrollAreaRef" class="sidebar-cat-list" @scroll="updateScrollbar">
         <div v-for="cat in CATEGORIES" :key="cat.name">
           <p :id="`sidebar-${slug(cat.name)}`" class="category-name">{{ categoryLabel(cat.name) }}</p>
           <div class="sidebar-stack" role="list" :aria-labelledby="`sidebar-${slug(cat.name)}`">
@@ -127,6 +236,30 @@ async function navigate(path: string) {
             </a>
           </div>
         </div>
+      </div>
+      <div
+        ref="scrollbarTrackRef"
+        class="sidebar-scrollbar"
+        :data-visible="isScrollbarVisible"
+        role="scrollbar"
+        aria-label="组件列表滚动条"
+        :aria-hidden="!isScrollbarVisible"
+        aria-orientation="vertical"
+        :aria-valuemin="0"
+        :aria-valuemax="scrollbarMax"
+        :aria-valuenow="scrollbarValue"
+        :tabindex="isScrollbarVisible ? 0 : -1"
+        @pointerdown="onTrackPointerDown"
+        @keydown="onScrollbarKeydown"
+      >
+        <span
+          class="sidebar-scrollbar-thumb"
+          :style="scrollbarThumbStyle"
+          @pointerdown.stop.prevent="onThumbPointerDown"
+          @pointermove.prevent="onThumbPointerMove"
+          @pointerup="onThumbPointerEnd"
+          @pointercancel="onThumbPointerEnd"
+        />
       </div>
     </div>
   </aside>
