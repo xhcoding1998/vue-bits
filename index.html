@@ -1,22 +1,53 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" style="background: #0b0b0b">
   <head>
+    <!-- Basic Meta Tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#07110d" />
+    <meta name="theme-color" content="#0b0b0b" />
     <meta
       name="description"
-      content="React Bits 与 Vue Bits 的中文组件分析、选型指南、实现原理和 AI 提示词。"
+      content="面向 Vue 3 的动效展示平台，提供实时预览、中文介绍、实现分析、完整源码和 AI 从零复刻提示词。"
     />
-    <meta property="og:title" content="Vue Bits 中文图鉴" />
     <meta
-      property="og:description"
-      content="132 个 Vue 3 动效组件的中文分析、依赖、实现原理与 AI 提示词。"
+      name="keywords"
+      content="Vue, Vue tutorials, Vue tips, Vue best practices, Vue development, Vue guides, Vue articles, Vue ecosystem, JavaScript, frontend development, VueJS, UI Library, Component Library, Vue Components, Vue Animations"
     />
-    <meta property="og:image" content="/og.png" />
+
+    <!-- Core fonts are bundled locally under /public/fonts for domestic access. -->
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/site-icon.svg" />
+    <meta name="apple-mobile-web-app-title" content="动效工坊" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph (OG) - Facebook, LinkedIn, etc. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="动效工坊｜Vue 动效展示与 AI 复刻" />
+    <meta property="og:description" content="Vue 3 动效实时展示、中文介绍、实现分析和 AI 从零复刻提示词。" />
+    <meta property="og:site_name" content="动效工坊" />
+    <meta property="og:locale" content="zh_CN" />
+
+    <!-- Twitter Card - Twitter Sharing -->
     <meta name="twitter:card" content="summary_large_image" />
-    <title>Vue Bits 中文图鉴 · 动效组件分析与 AI 提示词</title>
+    <meta name="twitter:title" content="动效工坊｜Vue 动效展示与 AI 复刻" />
+    <meta name="twitter:description" content="Vue 3 动效实时展示、中文介绍、实现分析和 AI 从零复刻提示词。" />
+
+    <!-- Canonical & Robots Meta Tags -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- Structured Data (JSON-LD for SEO) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "动效工坊",
+        "description": "面向 Vue 3 的动效展示平台，提供实时预览、中文解析、完整源码和 AI 从零复刻提示词。"
+      }
+    </script>
+    <title>动效工坊｜中文介绍、完整源码与 AI 从零复刻</title>
   </head>
+
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>

@@ -1,0 +1,8 @@
+{
+  "name": "动效工坊",
+  "short_name": "动效工坊",
+  "icons": [{ "src": "/site-icon.svg", "sizes": "any", "type": "image/svg+xml" }],
+  "theme_color": "#0b0b0b",
+  "background_color": "#0b0b0b",
+  "display": "standalone"
+}
