@@ -2,10 +2,11 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import './QuickStart.css';
 
-const AI_PROMPT_EXAMPLE = `请使用 Vue 3 + TypeScript 从零实现 Aurora 动态背景。
+const AI_PROMPT_EXAMPLE = `请从零实现 Aurora 动态背景，并适配我当前项目使用的技术栈。
+不要因为参考源码使用 Vue 就默认输出 Vue；如果无法判断框架，请先询问我。
 禁止导入本站组件、现成同类组件库或远程实现。
 使用 OGL 与 GLSL Shader 实时渲染，保持极光颜色混合、速度、振幅和响应式尺寸行为一致。
-输出完整 .vue 文件、Props 类型、资源清理逻辑和 App.vue 使用示例。`;
+输出目标框架对应的完整组件、公共参数类型、资源清理逻辑和可运行示例。`;
 
 const headerEl = ref<HTMLDivElement | null>(null);
 const terminalEl = ref<HTMLDivElement | null>(null);
@@ -64,7 +65,7 @@ onBeforeUnmount(() => {
       <div ref="headerEl" class="ln-qs-header" :class="{ 'is-visible': headerVisible }">
         <h2 class="ln-qs-title">看效果，然后让 AI 从零实现</h2>
         <p class="ln-qs-subtitle">
-          用户不需要安装本站组件库。每个详情页都会根据真实源码和当前参数生成一份可直接使用的中文复刻提示词。
+          用户不需要安装本站组件库。每个详情页都会根据真实源码和当前参数，生成适用于不同前端框架的中文复刻提示词。
         </p>
       </div>
 
@@ -81,7 +82,7 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="ln-qs-tab-bar-right">
-              <span class="prompt-language">Vue 3 · TypeScript</span>
+              <span class="prompt-language">Vue · React · Next.js · 更多</span>
             </div>
           </div>
 

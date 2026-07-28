@@ -40,7 +40,7 @@ const CARDS: Card[] = [
   {
     key: 'ai',
     title: 'AI 提示词就绪',
-    desc: '每个详情页自动生成包含源码、依赖、CSS 技法、颜色和参数的中文 AI 提示词。',
+    desc: '可选择 Vue、React、Next.js、Nuxt、Svelte、Angular 或原生 Web，提示词会同步源码分析、颜色和当前参数。',
     span: 5
   },
   {

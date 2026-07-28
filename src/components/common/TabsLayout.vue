@@ -21,6 +21,124 @@ type PropRow = {
 };
 
 type ModalName = 'code' | 'prompt';
+type PromptTargetId = 'auto' | 'vue' | 'react' | 'next' | 'nuxt' | 'svelte' | 'angular' | 'vanilla';
+type PromptTarget = {
+  id: PromptTargetId;
+  label: string;
+  projectLabel: string;
+  requirements: string[];
+  deliveryLabel: string;
+  exampleLabel: string;
+  verificationLabel: string;
+};
+
+const PROMPT_TARGET_STORAGE_KEY = 'motion-lab-prompt-target';
+const PROMPT_TARGETS: readonly PromptTarget[] = [
+  {
+    id: 'auto',
+    label: '自动适配',
+    projectLabel: '用户现有项目的技术栈',
+    requirements: [
+      '不要因为参考源码是 Vue 而默认输出 Vue；优先沿用用户现有项目的框架、语言、样式组织和构建工具。',
+      '如果上下文没有说明技术栈，先询问用户；无法追问时，交付原生 HTML、CSS 与 JavaScript 的可复用实现。',
+      '把 Props、事件、插槽和生命周期映射为目标技术栈对应的公共参数、回调、内容组合和资源清理机制。'
+    ],
+    deliveryLabel: '与用户项目匹配的完整组件、样式和必要工具文件',
+    exampleLabel: '与用户项目入口匹配的可运行使用示例',
+    verificationLabel: '输出代码可在用户现有项目中直接运行且没有框架混用'
+  },
+  {
+    id: 'vue',
+    label: 'Vue 3',
+    projectLabel: 'Vue 3 + TypeScript',
+    requirements: [
+      '使用 Composition API 与 <script setup lang="ts">。',
+      '提供完整 Props 类型、默认值、事件与插槽定义。',
+      '在 onUnmounted 中清理动画帧、Observer、事件监听、定时器和渲染资源。'
+    ],
+    deliveryLabel: '完整 .vue 组件文件及其必要样式或工具文件',
+    exampleLabel: '可直接运行的 App.vue 使用示例',
+    verificationLabel: 'TypeScript 无错误，可在 Vue 3 项目中直接运行'
+  },
+  {
+    id: 'react',
+    label: 'React',
+    projectLabel: 'React + TypeScript',
+    requirements: [
+      '使用函数组件、Hooks 与严格的 Props 类型，不得输出 Vue SFC 或 Composition API。',
+      '将 Vue 的响应式状态和生命周期映射为 React state、refs、effects 与 cleanup。',
+      '样式可使用 CSS Modules 或独立 CSS 文件，但必须保持原始选择器关系、视觉层级和响应式行为。'
+    ],
+    deliveryLabel: '完整 .tsx 组件、样式文件及必要工具文件',
+    exampleLabel: '可直接运行的 App.tsx 使用示例',
+    verificationLabel: 'TypeScript 无错误，可在 React 项目中直接运行'
+  },
+  {
+    id: 'next',
+    label: 'Next.js',
+    projectLabel: 'Next.js App Router + TypeScript',
+    requirements: [
+      '按 App Router 组织文件；只有实际使用浏览器 API、交互状态或生命周期的组件才添加 "use client"。',
+      '不得在服务端渲染阶段访问 window、document、Canvas 或 WebGL；必要时使用客户端边界或动态加载。',
+      '使用 React 函数组件与 Hooks，并完整清理 effects 中创建的动画和渲染资源。'
+    ],
+    deliveryLabel: '完整 Next.js 组件、样式文件及必要客户端边界',
+    exampleLabel: '可直接放入 app/page.tsx 的使用示例',
+    verificationLabel: '通过 Next.js 构建，不产生 hydration 或服务端浏览器 API 错误'
+  },
+  {
+    id: 'nuxt',
+    label: 'Nuxt 3',
+    projectLabel: 'Nuxt 3 + TypeScript',
+    requirements: [
+      '使用 Vue 3 Composition API 与 <script setup lang="ts">，并遵循 Nuxt 目录和自动导入约定。',
+      '浏览器专属渲染需要使用合适的客户端边界，避免服务端访问 window、document、Canvas 或 WebGL。',
+      '提供完整 Props、事件和插槽类型，并在组件卸载时清理所有动画与渲染资源。'
+    ],
+    deliveryLabel: '完整 Nuxt 组件、样式文件及必要客户端包装',
+    exampleLabel: '可直接放入 pages/index.vue 的使用示例',
+    verificationLabel: '通过 Nuxt 构建且不会出现 SSR 或 hydration 错误'
+  },
+  {
+    id: 'svelte',
+    label: 'Svelte',
+    projectLabel: 'Svelte + TypeScript',
+    requirements: [
+      '输出 Svelte 组件与 TypeScript 脚本，不得保留 Vue 模板指令、SFC API 或 React Hooks。',
+      '把 Props、派生状态、事件和插槽语义映射为 Svelte 对应能力。',
+      '在组件销毁时清理动画帧、Observer、事件监听、定时器以及 Canvas/WebGL 资源。'
+    ],
+    deliveryLabel: '完整 .svelte 组件、样式和必要工具文件',
+    exampleLabel: '可直接运行的 Svelte 页面使用示例',
+    verificationLabel: 'TypeScript 无错误，可在 Svelte 项目中直接运行'
+  },
+  {
+    id: 'angular',
+    label: 'Angular',
+    projectLabel: 'Angular + TypeScript',
+    requirements: [
+      '使用 standalone component、严格类型、模板和组件样式，不得输出 Vue SFC 或 React Hooks。',
+      '把 Props、事件和内容插槽映射为 Inputs、Outputs 与内容投影。',
+      '在组件销毁阶段清理动画帧、订阅、Observer、事件监听和 Canvas/WebGL 资源。'
+    ],
+    deliveryLabel: '完整 Angular 组件、模板、样式及必要工具文件',
+    exampleLabel: '可直接运行的 Angular 页面使用示例',
+    verificationLabel: '通过 Angular 类型检查和构建'
+  },
+  {
+    id: 'vanilla',
+    label: '原生 Web',
+    projectLabel: '原生 HTML + CSS + JavaScript',
+    requirements: [
+      '不得依赖 Vue、React、Svelte、Angular 或其他前端框架。',
+      '使用可复用 ES Module、Custom Element 或清晰的初始化/销毁 API，而不是只写一次性的页面脚本。',
+      '把组件参数映射为属性、配置对象和自定义事件，并提供明确的 destroy 清理方法。'
+    ],
+    deliveryLabel: '完整 HTML、CSS、JavaScript 模块及必要工具文件',
+    exampleLabel: '可直接在浏览器打开运行的使用示例',
+    verificationLabel: '无需框架即可运行，初始化、参数更新和销毁行为正常'
+  }
+];
 
 const props = withDefaults(
   defineProps<{
@@ -46,6 +164,7 @@ const route = useRoute();
 const copied = ref(false);
 const activeModal = ref<ModalName | null>(null);
 const modalRef = ref<HTMLElement | null>(null);
+const selectedPromptTargetId = ref<PromptTargetId>('auto');
 const liveControls = reactive(new Map<string, { label: string; value: LiveControlValue }>());
 let previouslyFocused: HTMLElement | null = null;
 let previousDocumentOverflow = '';
@@ -74,6 +193,9 @@ const componentEnglishTitle = computed(() =>
   componentNameEnglish(componentTitle.value || promptComponentName.value || '')
 );
 const componentChineseTitle = computed(() => componentNameZh(componentEnglishTitle.value));
+const selectedPromptTarget = computed(
+  () => PROMPT_TARGETS.find(target => target.id === selectedPromptTargetId.value) ?? PROMPT_TARGETS[0]
+);
 
 const liveCodeState = computed(() => buildLiveUsage(props.usage, props.propsTable, [...liveControls.values()]));
 const liveUsage = computed(() => liveCodeState.value.usage);
@@ -118,10 +240,10 @@ const categoryGuide = computed(() => {
 
   return (
     guides[category] ?? {
-      label: 'Vue 组件',
-      intro: '用于在 Vue 3 项目中实现可复用的视觉与交互效果。',
+      label: '交互组件',
+      intro: '用于在前端项目中实现可复用的视觉与交互效果。',
       scenarios: '网站、应用、活动页与交互原型',
-      fallbackInteraction: '由 Props 和组件状态共同驱动。'
+      fallbackInteraction: '由公共参数和组件状态共同驱动。'
     }
   );
 });
@@ -154,7 +276,7 @@ const detectedTechniques = computed(() => {
   add('OGL / GLSL Shader', /\bogl\b|gl_FragColor|fragmentShader|vertexShader/);
   add('GSAP 动画', /\bgsap\b|fromTo\(|timeline\(/);
   add('Motion for Vue', /motion-v|useMotion|animate\(/);
-  add('Vue scoped CSS', /<style[^>]*\bscoped\b/);
+  add('组件作用域样式（参考源码为 Vue scoped CSS）', /<style[^>]*\bscoped\b/);
   add('CSS 自定义变量', /var\(--|--[\w-]+\s*:/);
   add('Flexbox / Grid 布局', /display:\s*(?:flex|grid)|\bflex\b|\bgrid\b/);
   add('CSS 关键帧动画', /@keyframes|animation:/);
@@ -167,7 +289,7 @@ const detectedTechniques = computed(() => {
   add('ResizeObserver 尺寸监听', /ResizeObserver/);
   add('Pointer / Mouse 交互', /pointermove|mousemove|touchmove|MouseEvent|PointerEvent/);
 
-  return techniques.length > 0 ? techniques : ['Vue 3 响应式状态', 'CSS 布局与视觉样式'];
+  return techniques.length > 0 ? techniques : ['组件响应式状态', 'CSS 布局与视觉样式'];
 });
 
 const sourceLineCount = computed(() => stripHeader(props.source).split(/\r?\n/).length);
@@ -201,71 +323,15 @@ const interactionOverview = computed(() => {
 
 const stylingOverview = computed(() => {
   const colorsFound = detectedColors.value.length > 0 ? detectedColors.value.slice(0, 8).join('、') : '父级主题颜色';
-  return `样式与渲染代码保留在组件内部，主要颜色为 ${colorsFound}；可通过 Props 或 CSS 变量继续定制。`;
+  return `样式与渲染代码保留在组件内部，主要颜色为 ${colorsFound}；可通过公共参数或 CSS 变量继续定制。`;
 });
 
-function buildPrompt() {
-  const sourceShown = stripHeader(props.source);
-  const deps = dependencyList.value.length > 0 ? dependencyList.value.join(', ') : '无外部运行时依赖';
-  const colorsFound =
-    detectedColors.value.length > 0 ? detectedColors.value.join('、') : '源码未写死颜色，请沿用 CSS 变量或父级主题';
-  const techniquesFound = detectedTechniques.value.map(item => `- ${item}`).join('\n');
-
-  let prompt = `# 复刻 Vue 组件：${componentChineseTitle.value}（${componentEnglishTitle.value}）
-
-你是一名资深 Vue 3 动效组件工程师。请根据下面提供的完整源码，在我的 Vue 3 + Vite + TypeScript 项目中实现 <${promptComponentName.value} />。目标组件中文名为“${componentChineseTitle.value}”，英文技术名为“${componentEnglishTitle.value}”。这不是“做一个相似效果”，而是保持原组件的 DOM 结构、视觉风格、动画节奏、交互反馈、参数行为和响应式表现。
-
-## 技术约束
-- 必须使用 Vue 3 Composition API 与 <script setup lang="ts">。
-- 不要输出 React、JSX、Next.js 或 React Hooks。
-- 外部依赖：${deps}。
-- 源码中识别到的实现技术：
-${techniquesFound}
-- 源码中识别到的颜色 / CSS 变量：${colorsFound}。
-- 优先沿用源码的 scoped CSS、渐变、滤镜、阴影、混合模式、Canvas/WebGL/Shader 或动画库，不得擅自改成另一套视觉方案。
-- 保留所有可配置 props、默认值、事件与插槽；提供 TypeScript 类型。
-- 适配桌面端和移动端，支持鼠标、触控、窗口尺寸变化；若源码有动画循环、Observer、监听器或 WebGL 资源，组件卸载时必须完整清理。
-- 尊重 prefers-reduced-motion；无法关闭的核心动效需提供降级方案。
-
-## 使用示例
-\`\`\`vue
-${liveUsage.value}
-\`\`\`
-`;
-
-  if (props.propsTable.length > 0) {
-    prompt += `
-## Props 参数
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-${props.propsTable.map(p => `| ${p.name} | ${p.type} | ${p.default || '—'} | ${p.description} |`).join('\n')}
-`;
-  }
-
-  prompt += `
-## 完整组件源码
-\`\`\`vue
-${sourceShown}
-\`\`\`
-
-## 交付要求
-1. 先简要说明组件的 DOM 分层、动画机制、CSS 技法、颜色体系和每个依赖的用途。
-2. 输出可直接保存运行的完整 .vue 文件，不得省略 style、类型、工具函数或关键帧，不得用“其余代码不变”等占位语。
-3. 输出准确的 npm 安装命令；没有外部依赖时明确说明。
-4. 输出一个可直接粘贴到 App.vue 的使用示例，覆盖主要 props。
-5. 列出可调整的颜色、尺寸、速度、强度等设计参数，并指出它们在代码中的位置。
-6. 最后检查：视觉效果、交互、响应式、资源清理和 TypeScript 均应可用。
-`;
-
-  return prompt;
-}
-
 function buildZeroToOnePrompt() {
-  void buildPrompt;
-
   const sourceShown = stripHeader(props.source);
   const deps = dependencyList.value.length > 0 ? dependencyList.value.join(', ') : '无';
   const colorSummary = detectedColors.value.length > 0 ? detectedColors.value.join('、') : '未写死颜色，跟随父级主题';
+  const target = selectedPromptTarget.value;
+  const targetRequirements = target.requirements.map(requirement => `- ${requirement}`).join('\n');
   const currentParameterSummary =
     currentParameters.value.length > 0
       ? currentParameters.value
@@ -273,24 +339,31 @@ function buildZeroToOnePrompt() {
           .join('\n')
       : '- 当前组件没有可调参数，沿用源码默认值。';
 
-  let prompt = `# 任务：从 0 到 1 复刻 ${componentChineseTitle.value}（${componentEnglishTitle.value}）组件
+  let prompt = `# 任务：使用${target.label}从 0 到 1 复刻${componentChineseTitle.value}（${componentEnglishTitle.value}）
 
-你是一名资深 Vue 3 动效工程师。请在我的现有 Vue 3 + Vite + TypeScript 项目中，从空文件开始实现一个 <${promptComponentName.value} /> 组件，使视觉效果、动画节奏、鼠标/触控反馈、参数行为和响应式表现与参考效果一致。
+你是一名资深前端动效工程师。请在${target.projectLabel}中，从空文件开始实现一个可复用的“${componentEnglishTitle.value}”组件或模块，使视觉效果、动画节奏、鼠标/触控反馈、参数行为和响应式表现与参考效果一致。
+
+参考源码使用 Vue 3 编写，但它只用于说明结构、算法、样式和交互，不代表最终输出必须使用 Vue。最终代码必须严格采用当前选择的目标技术栈，不得混入其他框架语法。
 
 ## 最重要的限制
 - 禁止安装或导入本站组件、任何已经包含该组件实现的 UI/动效组件库或远程实现。
 - 禁止用 iframe、网页嵌入、远程组件、截图、GIF 或视频冒充真实交互。
-- 必须输出自包含、可维护的 Vue 3 源码，让组件在用户自己的项目中独立运行。
-- 只允许使用下面列出的底层依赖；如果依赖为“无”，则只使用 Vue 和浏览器原生 API。
+- 必须输出自包含、可维护的本地源码，让组件在用户自己的项目中独立运行。
+- 只允许使用下面列出的兼容底层依赖。若某个依赖仅适用于 Vue，必须映射为目标技术栈的等价底层方案或使用浏览器原生 API 重写，不能因此继续输出 Vue。
+
+## 目标技术栈
+- 当前选择：${target.label}
+- 项目环境：${target.projectLabel}
+${targetRequirements}
 
 ## 目标组件
 - 中文名称：${componentChineseTitle.value}
 - 英文名称：${componentEnglishTitle.value}
-- Vue 组件标签：<${promptComponentName.value} />
+- 建议组件名：${promptComponentName.value}
 - 分类：${categoryGuide.value.label}
 - 适用场景：${categoryGuide.value.scenarios}
-- 底层依赖：${deps}
-- 源码规模：约 ${sourceLineCount.value} 行
+- 参考源码底层依赖：${deps}
+- Vue 参考源码规模：约 ${sourceLineCount.value} 行
 
 ## 当前预览参数
 以下数值来自用户刚刚在“实时预览”中调整的状态，生成代码时必须作为默认使用示例：
@@ -305,24 +378,20 @@ ${currentParameterSummary}
 ## 必须保持的技术特征
 ${detectedTechniques.value.map(item => `- ${item}`).join('\n')}
 
-## Vue 3 技术要求
-- 使用 Composition API 与 <script setup lang="ts">。
-- 提供完整 Props 类型、默认值、事件和插槽定义。
-- 保留 scoped CSS、CSS 变量、渐变、滤镜、混合模式、Canvas、WebGL、GLSL 或动画算法，不得擅自换成另一种近似效果。
+## 跨框架实现要求
+- 把参考源码中的 Props、事件、插槽、响应式状态和生命周期转换成目标技术栈的标准写法，不要机械复制 Vue API。
+- 保留 CSS 变量、渐变、滤镜、混合模式、Canvas、WebGL、GLSL、动画算法和原始视觉层级，不得擅自换成另一种近似效果。
 - 支持桌面端和移动端；源码涉及指针时同时处理鼠标与触控。
-- 处理容器尺寸变化和高 DPR 屏幕。
-- 在 onUnmounted 中清理 requestAnimationFrame、Observer、事件监听、定时器、WebGL Context 和其他资源。
+- 处理容器尺寸变化、高 DPR 屏幕和页面不可见状态，避免重复创建动画循环。
+- 在目标技术栈对应的销毁阶段清理 requestAnimationFrame、Observer、事件监听、定时器、WebGL Context 和其他资源。
 - 支持 prefers-reduced-motion 或提供合理的低动态降级。
-
-## 参考使用方式
-\`\`\`vue
-${liveUsage.value}
-\`\`\`
 `;
 
   if (props.propsTable.length > 0) {
     prompt += `
-## 必须实现的 Props
+## 必须实现的公共参数
+下面名称来自参考组件。请保留参数语义和默认值，并映射为目标技术栈的 Props、Inputs、attributes 或配置对象。
+
 | 参数 | 类型 | 默认值 | 中文说明 |
 |------|------|--------|----------|
 ${props.propsTable
@@ -335,8 +404,8 @@ ${props.propsTable
   }
 
   prompt += `
-## 技术参考源码
-下面源码只用于准确理解结构、算法、样式和交互。最终答案必须输出完整的独立实现，不能要求用户安装或导入本组件库。
+## Vue 3 技术参考源码
+下面源码只用于准确理解结构、算法、样式和交互。最终答案必须翻译为“${target.label}”实现，输出完整的独立代码，不能要求用户安装或导入本组件库，也不能因为参考源码是 Vue 就继续返回 Vue。
 
 \`\`\`vue
 ${sourceShown}
@@ -346,23 +415,34 @@ ${sourceShown}
 1. 简要说明 DOM/Canvas/WebGL 分层、状态流、动画算法、交互映射、CSS 技法和颜色体系。
 2. 给出建议的文件目录。
 3. 给出底层依赖的 npm 安装命令；没有额外依赖时明确写“无需安装额外依赖”。
-4. 输出完整组件文件，禁止省略 style、类型、Shader、工具函数和关键帧，禁止使用“其余代码不变”。
-5. 输出一个可直接运行的 App.vue 示例，覆盖主要 Props。
+4. 输出${target.deliveryLabel}，禁止省略 style、类型、Shader、工具函数和关键帧，禁止使用“其余代码不变”。
+5. 输出${target.exampleLabel}，覆盖主要公共参数。
 6. 标出颜色、尺寸、速度、强度和交互范围等可调位置。
 7. 给出资源清理、移动端和性能注意事项。
 
 ## 验收标准
 - 不导入任何现成 Bits 组件或同类组件库。
 - 组件不是静态图片或视频，所有动画和交互都由本地代码实时产生。
-- 默认外观与参考一致，修改 Props 后实时更新。
+- 默认外观与参考一致，修改公共参数后实时更新。
 - 鼠标、触控、尺寸变化和组件卸载行为正常。
-- TypeScript 无错误，可在 Vue 3 + Vite 项目直接运行。
+- ${target.verificationLabel}。
 `;
 
   return prompt;
 }
 
 const generatedPrompt = computed(buildZeroToOnePrompt);
+
+function selectPromptTarget(targetId: PromptTargetId) {
+  selectedPromptTargetId.value = targetId;
+  copied.value = false;
+
+  try {
+    window.localStorage.setItem(PROMPT_TARGET_STORAGE_KEY, targetId);
+  } catch {
+    // 本地存储不可用时仍保留当前会话内的选择。
+  }
+}
 
 const handleCopyPrompt = async () => {
   if (!hasPrompt.value) return;
@@ -501,7 +581,18 @@ function handleDialogWheel(event: WheelEvent) {
   }
 }
 
-onMounted(() => document.addEventListener('keydown', handleModalKey));
+onMounted(() => {
+  document.addEventListener('keydown', handleModalKey);
+
+  try {
+    const savedTarget = window.localStorage.getItem(PROMPT_TARGET_STORAGE_KEY) as PromptTargetId | null;
+    if (savedTarget && PROMPT_TARGETS.some(target => target.id === savedTarget)) {
+      selectedPromptTargetId.value = savedTarget;
+    }
+  } catch {
+    // 无法读取本地存储时使用“自动适配”。
+  }
+});
 
 onBeforeUnmount(() => {
   document.removeEventListener('keydown', handleModalKey);
@@ -621,7 +712,9 @@ onBeforeUnmount(() => {
                 }}
               </h2>
               <p v-if="activeModal === 'code'">使用示例会同步当前预览参数，组件实现保持完整并可直接复制使用。</p>
-              <p v-else>无需导入本站组件库，提示词已包含交互规则、技术参考、Props、CSS 颜色、依赖和验收标准。</p>
+              <p v-else>
+                先选择目标技术栈；提示词会把 Vue 参考源码转换为对应框架，并同步当前参数、交互、颜色与验收标准。
+              </p>
             </div>
 
             <div class="source-dialog-actions">
@@ -647,12 +740,31 @@ onBeforeUnmount(() => {
             </div>
 
             <div v-else class="prompt-panel">
+              <section class="prompt-target-picker" aria-labelledby="prompt-target-title">
+                <div class="prompt-target-copy">
+                  <p id="prompt-target-title">目标技术栈</p>
+                  <span>参考源码是 Vue，但 AI 最终输出不受 Vue 限制；选择后提示词和复制内容会立即更新。</span>
+                </div>
+                <div class="prompt-target-options" role="group" aria-label="选择 AI 输出的目标技术栈">
+                  <button
+                    v-for="target in PROMPT_TARGETS"
+                    :key="target.id"
+                    type="button"
+                    class="prompt-target-button"
+                    :class="{ active: selectedPromptTargetId === target.id }"
+                    :aria-pressed="selectedPromptTargetId === target.id"
+                    @click="selectPromptTarget(target.id)"
+                  >
+                    {{ target.label }}
+                  </button>
+                </div>
+              </section>
+
               <div class="prompt-analysis-grid">
                 <section>
-                  <p class="prompt-analysis-label">依赖与技术栈</p>
+                  <p class="prompt-analysis-label">目标栈与底层依赖</p>
                   <div class="prompt-meta">
-                    <span>Vue 3</span>
-                    <span>TypeScript</span>
+                    <span class="prompt-target-meta">{{ selectedPromptTarget.label }}</span>
                     <span v-for="dependency in dependencyList" :key="dependency">{{ dependency }}</span>
                     <span v-if="dependencyList.length === 0">无外部依赖</span>
                   </div>
@@ -1054,6 +1166,68 @@ onBeforeUnmount(() => {
   background: radial-gradient(circle at 100% 0, rgba(94, 255, 76, 0.08), transparent 30rem), var(--bg-elevated);
 }
 
+.prompt-target-picker {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.72fr) minmax(0, 1.28fr);
+  gap: 1.25rem;
+  align-items: center;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border-secondary);
+  background: rgba(94, 255, 76, 0.025);
+}
+
+.prompt-target-copy p {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.prompt-target-copy span {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.prompt-target-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.prompt-target-button {
+  min-height: 34px;
+  padding: 0.42rem 0.72rem;
+  border: 1px solid var(--border-secondary);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text-secondary);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.prompt-target-button:hover {
+  border-color: rgba(94, 255, 76, 0.32);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.prompt-target-button.active {
+  border-color: rgba(94, 255, 76, 0.48);
+  background: rgba(94, 255, 76, 0.12);
+  color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px rgba(94, 255, 76, 0.06);
+}
+
 .prompt-analysis-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1092,6 +1266,12 @@ onBeforeUnmount(() => {
   color: var(--color-accent-muted);
   font-family: 'Geist Mono', ui-monospace, monospace;
   font-size: 0.75rem;
+}
+
+.prompt-meta .prompt-target-meta {
+  border-color: rgba(94, 255, 76, 0.4);
+  background: rgba(94, 255, 76, 0.12);
+  color: var(--color-accent);
 }
 
 .color-dot {
@@ -1186,6 +1366,15 @@ onBeforeUnmount(() => {
 
   .prompt-analysis-grid {
     grid-template-columns: 1fr;
+  }
+
+  .prompt-target-picker {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .prompt-target-options {
+    justify-content: flex-start;
   }
 }
 
