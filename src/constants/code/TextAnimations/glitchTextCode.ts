@@ -9,7 +9,7 @@ export const glitchText = createCodeObject(code, 'TextAnimations/GlitchText', {
     :enable-on-hover="true"
     class="custom-class"
   >
-    动效工坊
+    灵件碎片
   </GlitchText>
 </template>
 

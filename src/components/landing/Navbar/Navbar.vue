@@ -139,7 +139,7 @@ onUnmounted(() => {
     <div ref="navbarInnerEl" class="ln-navbar-inner">
       <!-- Left -->
       <div class="ln-navbar-left">
-        <RouterLink to="/" class="ln-navbar-logo" aria-label="动效工坊首页">
+        <RouterLink to="/" class="ln-navbar-logo" aria-label="灵件碎片首页">
           <SiteBrand />
         </RouterLink>
 

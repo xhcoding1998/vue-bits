@@ -25,6 +25,7 @@
 }
 
 html {
+  font-family: var(--font-geist-sans);
   scroll-behavior: smooth;
 }
 
@@ -35,11 +36,18 @@ a {
 }
 
 body {
-  font-family: 'Geist', sans-serif;
+  font-family: var(--font-geist-sans);
   margin: 0;
   min-width: 100%;
   background: var(--bg-body);
   color: var(--text-primary);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 .app-container {

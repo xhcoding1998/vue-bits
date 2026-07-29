@@ -5,8 +5,8 @@ export const fallingText = createCodeObject(code, 'TextAnimations/FallingText', 
   installation: `npm install matter-js @types/matter-js`,
   usage: `<template>
   <FallingText
-    text="动效工坊收录可交互的 Vue 动画组件，并提供中文解析、完整源码与 AI 从零复刻提示词。"
-    :highlight-words="['动效工坊', 'Vue', '中文解析', '完整源码', 'AI']"
+    text="灵件碎片收录可交互的 Vue 动画组件，并提供中文解析、完整源码与 AI 从零复刻提示词。"
+    :highlight-words="['灵件碎片', 'Vue', '中文解析', '完整源码', 'AI']"
     highlight-class="highlighted"
     trigger="hover"
     background-color="transparent"

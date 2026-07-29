@@ -110,7 +110,7 @@
 /* ─── Headlines ─── */
 
 .ln-cta-headline {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-geist-sans);
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 500;
   line-height: 1.1;
@@ -139,7 +139,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 13px;
   font-weight: 500;
   padding: 11px 22px;

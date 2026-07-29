@@ -19,7 +19,7 @@
 /* ─── Title ─── */
 
 .ln-demo-title {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-geist-sans);
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 500;
   line-height: 1.1;
@@ -128,7 +128,7 @@
 }
 
 .ln-demo-card-name {
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   color: rgba(255, 255, 255, 0.3);
 }
@@ -139,7 +139,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 10px;
   letter-spacing: 0.04em;
   color: #99ffd9;

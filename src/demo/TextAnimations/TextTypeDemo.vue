@@ -96,7 +96,7 @@ import { computed, ref } from 'vue';
 const { rerenderKey: key, forceRerender } = useForceRerender();
 
 const DEFAULTS = {
-  texts: ['欢迎来到动效工坊！', '从真实交互中发现更多灵感。'],
+  texts: ['欢迎来到灵件碎片！', '从真实交互中发现更多灵感。'],
   typingSpeed: 75,
   pauseDuration: 1500,
   deletingSpeed: 50,

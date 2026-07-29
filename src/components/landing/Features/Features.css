@@ -19,7 +19,7 @@
 /* ─── Title ─── */
 
 .ln-features-title {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-geist-sans);
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 500;
   line-height: 1.1;
@@ -169,7 +169,7 @@
 }
 
 .ln-feat-pill {
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
@@ -422,7 +422,7 @@
 }
 
 .ln-feat-aichat-chevron {
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 11px;
   color: rgba(255, 255, 255, 0.35);
   flex-shrink: 0;
@@ -578,7 +578,7 @@
 }
 
 .ln-feat-stars-count {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-geist-sans);
   font-size: 52px;
   color: rgba(255, 255, 255, 0.45);
   letter-spacing: -0.03em;

@@ -58,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   font-weight: 500;
   text-transform: none;
@@ -97,7 +97,7 @@
 }
 
 .ln-hero-headline {
-  font-family: 'Geist Pixel Line', sans-serif;
+  font-family: var(--font-geist-sans);
   font-size: clamp(28px, 5.5vw, 68px);
   font-weight: 500;
   line-height: 1.1;
@@ -127,7 +127,7 @@
 }
 
 .ln-hero-btn {
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 14px;
   font-weight: 500;
   padding: 12px 24px;
@@ -202,7 +202,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.01);
@@ -242,7 +242,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.01);
@@ -300,7 +300,7 @@
   display: block;
   width: 100%;
   text-align: left;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   background: transparent;
@@ -497,7 +497,7 @@
 }
 
 .ln-hero-code-hint {
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 11px;
   color: rgba(255, 255, 255, 0.2);
   padding: 0 16px 10px;

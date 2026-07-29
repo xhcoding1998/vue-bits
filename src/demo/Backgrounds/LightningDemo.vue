@@ -18,7 +18,7 @@
           :intensity="intensity"
           :size="size"
         />
-        <BackgroundContent pillText="New Background" headline="在动效工坊体验闪电能量" />
+        <BackgroundContent pillText="New Background" headline="在灵件碎片体验闪电能量" />
       </div>
     </template>
 

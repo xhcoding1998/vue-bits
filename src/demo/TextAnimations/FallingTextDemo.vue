@@ -12,8 +12,8 @@
       <div class="h-[400px] overflow-hidden demo-container">
         <FallingText
           :key="key"
-          text="动效工坊收录可交互的 Vue 动画组件，并提供中文解析、完整源码与 AI 从零复刻提示词。"
-          :highlight-words="['动效工坊', 'Vue', '中文解析', '完整源码', 'AI']"
+          text="灵件碎片收录可交互的 Vue 动画组件，并提供中文解析、完整源码与 AI 从零复刻提示词。"
+          :highlight-words="['灵件碎片', 'Vue', '中文解析', '完整源码', 'AI']"
           :trigger="trigger"
           :gravity="gravity"
           font-size="2rem"

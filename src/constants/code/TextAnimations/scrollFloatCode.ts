@@ -11,7 +11,7 @@ export const scrollFloatCode = createCodeObject(code, 'TextAnimations/ScrollFloa
     scroll-end="bottom bottom-=40%"
     :stagger="0.03"
   >
-    动效工坊
+    灵件碎片
   </ScrollFloat>
 </template>
 

@@ -5,7 +5,7 @@ export const curvedLoop = createCodeObject(code, 'TextAnimations/CurvedLoop', {
   usage: `<template>
   <div>
     <!-- Basic usage -->
-    <CurvedLoop marquee-text="欢迎来到动效工坊 ✦" />
+    <CurvedLoop marquee-text="欢迎来到灵件碎片 ✦" />
 
     <!-- With custom props -->
     <CurvedLoop 

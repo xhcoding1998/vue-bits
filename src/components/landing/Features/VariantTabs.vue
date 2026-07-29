@@ -207,7 +207,7 @@ import iconLogo from '@/assets/logos/site-mark-light.svg';
 }
 
 .ln-feat-stack-name {
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   color: rgba(255, 255, 255, 0.88);
   letter-spacing: -0.01em;

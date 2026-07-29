@@ -5,7 +5,7 @@ export const scrollVelocity = createCodeObject(code, 'TextAnimations/ScrollVeloc
   installation: `npm install gsap`,
   usage: `<template>
   <ScrollVelocity
-    :texts="['动效工坊', 'Scroll Down']"
+    :texts="['灵件碎片', 'Scroll Down']"
     :velocity="velocity"
     class="custom-scroll-text"
   />

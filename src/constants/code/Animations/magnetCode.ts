@@ -8,7 +8,7 @@ export const magnet = createCodeObject(code, 'Animations/Magnet', {
     :disabled="false"
     :magnet-strength="50"
   >
-    <p>探索动效工坊的交互细节</p>
+    <p>探索灵件碎片的交互细节</p>
   </Magnet>
 </template>
 

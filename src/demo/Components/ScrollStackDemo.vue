@@ -68,7 +68,7 @@
           </ScrollStackItem>
 
           <ScrollStackItem itemClassName="scroll-stack-card-demo ssc-demo-5">
-            <h3>全部收录在动效工坊</h3>
+            <h3>全部收录在灵件碎片</h3>
           </ScrollStackItem>
         </ScrollStack>
       </div>

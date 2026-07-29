@@ -12,7 +12,7 @@ export const stepper = createCodeObject(code, 'Components/Stepper', {
     @final-step-completed="handleFinalStepCompleted"
   >
     <div>
-      <h2>欢迎体验动效工坊的步骤组件！</h2>
+      <h2>欢迎体验灵件碎片的步骤组件！</h2>
       <p>Check out the next step!</p>
     </div>
 

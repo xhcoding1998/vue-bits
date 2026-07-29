@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0 24px;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   pointer-events: none;
 }
 
@@ -197,7 +197,7 @@
 
   color: rgba(255, 255, 255, 0.7);
 
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 12px;
   font-weight: 500;
 
@@ -474,7 +474,7 @@
   align-items: center;
   justify-content: space-between;
 
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   font-size: 13px;
   font-weight: 500;
 

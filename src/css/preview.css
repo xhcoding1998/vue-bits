@@ -107,7 +107,7 @@
   right: 12px;
   transform: translateY(-50%);
   color: var(--text-primary);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-variant-numeric: tabular-nums;
   font-size: 13px;
   font-weight: 500;
@@ -295,7 +295,7 @@
   border: none;
   outline: none;
   color: var(--text-primary);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 13px;
   padding: 0 12px 0 40%;
   text-align: right;

@@ -53,7 +53,7 @@ const DEFAULTS = {
   enableOnHover: false
 };
 
-const text = ref('动效工坊');
+const text = ref('灵件碎片');
 const speed = ref(DEFAULTS.speed);
 const enableShadows = ref(DEFAULTS.enableShadows);
 const enableOnHover = ref(DEFAULTS.enableOnHover);
@@ -73,7 +73,7 @@ function reset() {
 }
 
 watch(enableOnHover, newValue => {
-  text.value = newValue ? 'Hover Me' : '动效工坊';
+  text.value = newValue ? 'Hover Me' : '灵件碎片';
 });
 
 const props: PropRow[] = [

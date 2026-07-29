@@ -18,7 +18,7 @@
             :key="key"
             :scroll-container-ref="containerRef"
           >
-            动效工坊
+            灵件碎片
           </ScrollFloat>
         </div>
       </div>

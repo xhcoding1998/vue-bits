@@ -12,7 +12,7 @@
       <div class="relative h-[400px] overflow-hidden demo-container">
         <div class="relative flex justify-center items-center">
           <ScrollVelocity
-            :texts="['动效工坊', 'Scroll Down']"
+            :texts="['灵件碎片', 'Scroll Down']"
             :velocity="velocity"
             :num-copies="numCopies"
             :damping="damping"

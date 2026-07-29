@@ -20,7 +20,7 @@
           :next-button-text="nextButtonText"
         >
           <div>
-            <h2 class="font-semibold text-[#27FF64] text-xl">欢迎体验动效工坊的步骤组件！</h2>
+            <h2 class="font-semibold text-[#27FF64] text-xl">欢迎体验灵件碎片的步骤组件！</h2>
             <p>Check out the next step!</p>
           </div>
 

@@ -829,7 +829,7 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.4rem;
   color: var(--color-accent);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.63rem;
   font-weight: 700;
   letter-spacing: 0.11em;
@@ -936,7 +936,7 @@ onBeforeUnmount(() => {
 
 .source-dialog-title > span {
   color: var(--color-accent);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.64rem;
   font-weight: 750;
   letter-spacing: 0.13em;
@@ -1063,7 +1063,7 @@ onBeforeUnmount(() => {
 .component-guide-eyebrow {
   margin: 0 0 0.55rem;
   color: var(--color-accent);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -1079,7 +1079,7 @@ onBeforeUnmount(() => {
 .component-guide-title-en {
   margin-left: 0.5rem;
   color: var(--text-muted);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.68em;
   font-weight: 500;
   letter-spacing: 0;
@@ -1107,7 +1107,7 @@ onBeforeUnmount(() => {
 
 .component-guide-source span {
   color: var(--color-accent);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1141,7 +1141,7 @@ onBeforeUnmount(() => {
 
 .component-guide-grid article > span {
   color: var(--color-accent);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.65rem;
   font-weight: 700;
 }
@@ -1205,7 +1205,7 @@ onBeforeUnmount(() => {
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.025);
   color: var(--text-secondary);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.72rem;
   cursor: pointer;
   transition:
@@ -1264,7 +1264,7 @@ onBeforeUnmount(() => {
   border-radius: 7px;
   background: rgba(94, 255, 76, 0.05);
   color: var(--color-accent-muted);
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 0.75rem;
 }
 

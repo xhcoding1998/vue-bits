@@ -571,7 +571,7 @@ function toggleFavorite(key: string, componentKey: string) {
 }
 
 .component-list-card-en {
-  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--font-geist-sans);
   font-size: 11px;
 }
 
@@ -615,7 +615,7 @@ function toggleFavorite(key: string, componentKey: string) {
   font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-sans);
   color: #fff;
   border: 1px solid var(--color-primary);
   background: rgba(88, 247, 85, 0.4);

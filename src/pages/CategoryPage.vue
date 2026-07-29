@@ -40,7 +40,7 @@ watch(
 watch(
   [chineseName, englishName],
   ([localizedName, technicalName]) => {
-    if (localizedName) document.title = `${localizedName}｜${technicalName}｜动效工坊`;
+    if (localizedName) document.title = `${localizedName}｜${technicalName}｜灵件碎片`;
   },
   { immediate: true }
 );

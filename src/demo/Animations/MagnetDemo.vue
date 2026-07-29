@@ -18,7 +18,7 @@
         >
           <span class="magnet-link">
             探索
-            <span class="accent">动效工坊</span>
+            <span class="accent">灵件碎片</span>
             的交互细节
           </span>
         </Magnet>
